@@ -1,0 +1,9 @@
+<resources>
+    <color name="shelf_bg">#1B1C22</color>
+    <color name="shelf_surface">#25262E</color>
+    <color name="shelf_text">#F4F4F6</color>
+    <color name="shelf_muted">#A7A8B0</color>
+    <color name="shelf_accent">#C1443B</color>
+    <color name="shelf_paper">#F7F3EA</color>
+    <color name="shelf_paper_dim">#EAE4D4</color>
+</resources>

@@ -1,0 +1,12 @@
+<resources>
+    <style name="Theme.Shelf" parent="android:style/Theme.Material.NoActionBar">
+        <item name="android:fontFamily">sans</item>
+        <item name="android:colorAccent">@color/shelf_accent</item>
+        <item name="android:navigationBarColor">@color/shelf_bg</item>
+        <item name="android:statusBarColor">@color/shelf_bg</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowActionModeOverlay">true</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowBackground">@color/shelf_bg</item>
+    </style>
+</resources>
