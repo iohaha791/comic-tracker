@@ -34,5 +34,5 @@ This is a ground-up rewrite, not an update:
   all.
 
 ## Related
-- [`main`](../../tree/main) – the Flask + SQLite server this app connects to, including the JSON API it syncs against.
+- [`main`](../../tree/main) – the Flask + SQLite server for Shelf WebView version connects to, including the JSON API it syncs against.
 - [`shelf-android`](https://github.com/iohaha791/comic-tracker/tree/shelf-android) – A native Android wrapper around the Shelf comic tracker website. It loads the site in desktop-site mode, and falls back to a local offline cache (with sync back to the server) when the server isn't reachable.
