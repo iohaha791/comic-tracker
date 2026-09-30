@@ -20,3 +20,4 @@ If the server isn't running or isn't reachable, this app still works in a limite
 
 ## Related
 - [`main`](../../tree/main) — the Flask + SQLite server this app connects to, including the JSON API it syncs against.
+- [`shelf-standalone`](https://github.com/iohaha791/comic-tracker/tree/shelf-standalone) – A fully native, standalone Android app
