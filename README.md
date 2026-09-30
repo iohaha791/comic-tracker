@@ -1,103 +1,38 @@
-# Shelf — a local comic bookmark tracker
+# Shelf Android — Standalone App
 
-A small local website for keeping track of the comics/manga you're reading:
-title, description, last chapter read, and a cover image you upload yourself.
+A fully native, standalone Android app. It does not talk to any server —
+everything (titles, descriptions, last chapter read, cover art) lives only
+on the phone, in a local SQLite database and local image files.
 
-## Setup
+## What changed from the WebView version
+This is a ground-up rewrite, not an update:
+- **Package renamed** from `com.ilham.shelf` to `com.shelf.app`. Android
+  treats this as a completely different app — it will install *alongside*
+  the old WebView-based app rather than replacing it. If you don't want
+  both, uninstall the old one manually. None of its data carries over
+  automatically (different app = different sandboxed storage), but that's
+  fine here since this version doesn't need any server-synced data anyway.
+- The WebView, server URL setup screen, JSON API client, and sync manager
+  are all gone. There is no "offline vs online" mode anymore — it's always
+  the same native screens.
+- Same visual language as the Shelf website: dark ink background, warm
+  paper-colored cover placeholders, red accent, serif titles, 3-column grid.
+- Same app icon as before (`shelf_icon.png`), untouched.
 
-Requires Python 3.9+.
+## Features
+- **Home**: 3-column grid of covers, titles, and last chapter read. Search
+  bar filters by title/description live as you type. "+ ADD" opens a new
+  comic form with a smooth slide-up entrance.
+- **Tapping a comic** opens its detail/edit screen with a shared-element
+  zoom animation — the cover art grows smoothly from its grid position into
+  the full detail view, and reverses the same way going back.
+- **Detail/edit screen**: change title, last chapter, description, and
+  cover art (picked from the phone's gallery, copied into the app's private
+  storage). Delete with a confirmation prompt.
+- Everything is stored locally via a plain SQLite database
+  (`ShelfDatabase.java`) — no network permission, no internet dependency at
+  all.
 
-```bash
-cd comic-tracker
-python -m venv venv
-source venv/bin/activate        # Windows: venv\Scripts\activate
-pip install -r requirements.txt
-python app.py
-```
-
-Then open **http://127.0.0.1:5050** in your browser.
-
-A `comics.db` SQLite file and a `static/uploads/` folder are created automatically
-on first run — that's where your data and cover images live. Back up `comics.db`
-and `static/uploads/` together if you want to keep a copy of your library.
-
-## What it does
-
-- **Home** — a 3-column grid of your comics: cover art, title, and last chapter
-  read underneath. Click any card to edit it.
-- **Search** — filters by title or description as you search.
-- **Add** (`+ Add comic`) — title, description, last chapter read, and an
-  optional cover image (png/jpg/jpeg/webp/gif).
-- **Edit** — same fields, pre-filled. You can replace the cover, remove it, or
-  delete the comic entirely (with a confirmation prompt).
-
-## Running it like a desktop app (Windows)
-
-Once you've done the one-time `pip install -r requirements.txt` above, you don't
-need to open a terminal again:
-
-1. **Double-click `Start Shelf.vbs`.** No console window appears — it starts
-   the server quietly in the background and opens your browser to Shelf after
-   about a second. Double-clicking it again just opens a new tab instead of
-   starting a second copy.
-2. **To close it**, double-click `Stop Shelf.bat` (or open Task Manager,
-   find `pythonw.exe`, and End Task).
-3. **To have it start automatically when you log into Windows, without a
-   browser tab popping open:**
-   - Press `Win + R`, type `shell:startup`, press Enter — this opens your
-     personal Startup folder.
-   - Right-click **`Start Shelf (Silent).vbs`** → *Create shortcut*, then
-     drag that shortcut into the Startup folder.
-   - From then on, Shelf starts quietly in the background every time you log
-     in — no console, no browser tab. Whenever you actually want to look at
-     it, just open your browser and go to `http://127.0.0.1:5050` (worth
-     bookmarking). Double-clicking `Start Shelf.vbs` still opens a tab
-     automatically, same as before — that one's for on-demand use, not
-     login.
-
-Want a proper desktop icon? Right-click `Start Shelf.vbs` → *Create shortcut*,
-then drag that shortcut onto your Desktop and rename it "Shelf". You can also
-right-click the shortcut → *Properties* → *Change Icon* to give it a custom
-icon.
-
-## Installing it as an app on Android
-
-There's a dedicated native Android app for this, on the
-[`shelf-android`](https://github.com/iohaha791/comic-tracker/tree/shelf-android)
-branch — see that branch's README for setup and build instructions. It wraps
-this same server in desktop-site mode and adds an offline cache with sync,
-which works better than a browser-installed shortcut (no HTTPS workarounds
-needed, and it still works when the server's briefly unreachable).
-
-You'll still need this server (the `main` branch) running and reachable on
-your network first — the Android app is a client for it, not a replacement.
-
-## Access from other devices on your network
-
-Shelf listens on all network interfaces, so any device on the same Wi-Fi/LAN
-(phone, tablet, another computer) can open it too — not just the PC it's
-running on.
-
-1. On the Windows PC running Shelf, open Command Prompt and run `ipconfig`.
-   Look for **IPv4 Address** (something like `192.168.1.23`).
-2. On the other device, browse to `http://192.168.1.23:5050` (use your own
-   IP). Bookmark it there if you like.
-3. **First time only:** Windows Firewall will likely pop up asking whether to
-   allow Python through on private networks — click **Allow access**. If you
-   miss that prompt, search Start Menu for "Allow an app through Windows
-   Firewall" and enable Python for Private networks.
-
-A few things worth knowing:
-- Your PC's IP can change (e.g. after a router restart) unless you've set a
-  static IP or DHCP reservation for it — if the address stops working,
-  re-check it with `ipconfig`.
-- This has no login/password, so anyone on your network can view and edit
-  your library. Fine for a home network; don't do this on a shared/public
-  Wi-Fi network or expose the port to the internet.
-
-## Notes
-
-- This is meant to run on your own machine (`127.0.0.1`), not to be exposed to
-  the internet as-is — it has no login/auth.
-- Cover art with no upload falls back to a plain title card, so the grid still
-  looks fine before you add images.
+## Related
+- [`main`](../../tree/main) – the Flask + SQLite server this app connects to, including the JSON API it syncs against.
+- [`shelf-android`](https://github.com/iohaha791/comic-tracker/tree/shelf-android) – A native Android wrapper around the Shelf comic tracker website. It loads the site in desktop-site mode, and falls back to a local offline cache (with sync back to the server) when the server isn't reachable.
