@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Shelf{% endblock %}
+{% block content %}
+
+  <header class="shelf-header">
+    <div>
+      <h1 class="shelf-title"><a href="{{ url_for('home') }}">Shelf</a></h1>
+      <p class="shelf-sub">Your comics, where you left off.</p>
+    </div>
+  </header>
+
+  <div class="controls-row">
+    <form class="search-form" action="{{ url_for('home') }}" method="get">
+      <input type="text" name="q" value="{{ query }}" placeholder="Search title or description...">
+      <button type="submit">Search</button>
+    </form>
+    <a class="btn btn-accent" href="{{ url_for('add') }}">+ Add comic</a>
+  </div>
+
+  {% if query %}
+    <p class="search-note">
+      {{ comics|length }} result{{ '' if comics|length == 1 else 's' }} for "{{ query }}"
+      &middot; <a href="{{ url_for('home') }}">clear</a>
+    </p>
+  {% endif %}
+
+  {% if comics %}
+    <div class="comic-grid">
+      {% for comic in comics %}
+        <a class="comic-card" href="{{ url_for('edit', comic_id=comic['id']) }}">
+          <div class="cover-frame">
+            {% if comic['cover_filename'] %}
+              <img src="{{ url_for('static', filename='uploads/' ~ comic['cover_filename']) }}" alt="{{ comic['title'] }} cover">
+            {% else %}
+              <div class="cover-placeholder">{{ comic['title'] }}</div>
+            {% endif %}
+            <span class="edit-tab">Edit</span>
+          </div>
+          <div class="comic-meta">
+            <p class="comic-title">{{ comic['title'] }}</p>
+            {% if comic['last_chapter'] %}
+              <p class="comic-chapter">{{ comic['last_chapter'] }}</p>
+            {% else %}
+              <p class="comic-chapter empty">No progress logged</p>
+            {% endif %}
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty-shelf">
+      {% if query %}
+        <p>Nothing on the shelf matches that search.</p>
+      {% else %}
+        <p>The shelf is empty. <a href="{{ url_for('add') }}">Add your first comic</a> to get started.</p>
+      {% endif %}
+    </div>
+  {% endif %}
+
+{% endblock %}

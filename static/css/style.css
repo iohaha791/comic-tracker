@@ -1,0 +1,391 @@
+:root {
+  --ink: #1b1c22;
+  --ink-soft: #26272f;
+  --paper: #f7f3ea;
+  --paper-dim: #eae4d4;
+  --text-ink: #24252b;
+  --text-muted: #726c5c;
+  --accent: #c1443b;
+  --accent-dark: #9c352e;
+  --rule: rgba(247, 243, 234, 0.14);
+
+  --serif: Georgia, "Iowan Old Style", "Palatino Linotype", Palatino, serif;
+  --sans: "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--sans);
+  line-height: 1.5;
+}
+
+a {
+  color: inherit;
+}
+
+.wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 28px 80px;
+}
+
+/* ---------- header / shelf banner ---------- */
+
+.shelf-header {
+  padding: 48px 0 28px;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 32px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.shelf-title {
+  font-family: var(--serif);
+  font-size: 2.4rem;
+  margin: 0;
+  letter-spacing: 0.3px;
+}
+
+.shelf-title a {
+  text-decoration: none;
+  color: var(--paper);
+}
+
+.shelf-sub {
+  margin: 6px 0 0;
+  color: var(--paper);
+  opacity: 0.55;
+  font-size: 0.95rem;
+}
+
+.controls-row {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 36px;
+}
+
+.search-form {
+  display: flex;
+  gap: 0;
+  flex: 1;
+  min-width: 220px;
+  max-width: 420px;
+}
+
+.search-form input[type="text"] {
+  flex: 1;
+  background: var(--ink-soft);
+  border: 1px solid var(--rule);
+  border-right: none;
+  color: var(--paper);
+  padding: 11px 14px;
+  font-size: 0.95rem;
+  border-radius: 3px 0 0 3px;
+}
+
+.search-form input[type="text"]::placeholder {
+  color: rgba(247, 243, 234, 0.4);
+}
+
+.search-form input[type="text"]:focus,
+.field input:focus,
+.field textarea:focus,
+.btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.search-form button {
+  background: var(--ink-soft);
+  border: 1px solid var(--rule);
+  color: var(--paper);
+  padding: 0 16px;
+  border-radius: 0 3px 3px 0;
+  cursor: pointer;
+}
+
+.btn {
+  display: inline-block;
+  text-decoration: none;
+  padding: 11px 20px;
+  border-radius: 3px;
+  font-size: 0.95rem;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.btn-accent {
+  background: var(--accent);
+  color: var(--paper);
+}
+
+.btn-accent:hover {
+  background: var(--accent-dark);
+}
+
+.btn-ghost {
+  background: transparent;
+  border-color: var(--rule);
+  color: var(--paper);
+}
+
+.btn-ghost:hover {
+  border-color: var(--paper);
+}
+
+.search-note {
+  color: var(--paper);
+  opacity: 0.55;
+  font-size: 0.88rem;
+  margin: -20px 0 28px;
+}
+
+.search-note a {
+  color: var(--accent);
+  opacity: 1;
+}
+
+/* ---------- comic grid: 3 per row ---------- */
+
+.comic-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px 24px;
+}
+
+@media (max-width: 760px) {
+  .comic-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .comic-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.comic-card {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.cover-frame {
+  position: relative;
+  aspect-ratio: 2 / 3;
+  background: var(--paper-dim);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+.cover-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cover-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  text-align: center;
+  font-family: var(--serif);
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+.edit-tab {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(27, 28, 34, 0.75);
+  color: var(--paper);
+  font-size: 0.72rem;
+  padding: 4px 9px;
+  border-radius: 3px;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.comic-card:hover .edit-tab,
+.comic-card:focus-visible .edit-tab {
+  opacity: 1;
+}
+
+.comic-meta {
+  padding-top: 10px;
+}
+
+.comic-title {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  margin: 0 0 4px;
+  color: var(--paper);
+}
+
+.comic-chapter {
+  font-size: 0.85rem;
+  color: var(--accent);
+  margin: 0;
+}
+
+.comic-chapter.empty {
+  color: var(--paper);
+  opacity: 0.4;
+}
+
+/* ---------- empty state ---------- */
+
+.empty-shelf {
+  padding: 60px 0;
+  text-align: center;
+  color: var(--paper);
+  opacity: 0.6;
+  border-top: 1px solid var(--rule);
+}
+
+.empty-shelf a {
+  color: var(--accent);
+  opacity: 1;
+}
+
+/* ---------- form page ---------- */
+
+.form-page {
+  max-width: 560px;
+  margin: 0 auto;
+  padding-top: 48px;
+}
+
+.form-page h1 {
+  font-family: var(--serif);
+  font-size: 1.9rem;
+  margin: 0 0 4px;
+}
+
+.back-link {
+  display: inline-block;
+  color: var(--paper);
+  opacity: 0.55;
+  text-decoration: none;
+  font-size: 0.88rem;
+  margin-bottom: 20px;
+}
+
+.back-link:hover {
+  opacity: 0.9;
+}
+
+.field {
+  margin-bottom: 22px;
+}
+
+.field label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--paper);
+  opacity: 0.7;
+  margin-bottom: 6px;
+}
+
+.field input[type="text"],
+.field textarea {
+  width: 100%;
+  background: var(--ink-soft);
+  border: 1px solid var(--rule);
+  color: var(--paper);
+  padding: 11px 13px;
+  font-size: 0.95rem;
+  border-radius: 3px;
+  font-family: var(--sans);
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.cover-current {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+
+.cover-current img {
+  width: 70px;
+  aspect-ratio: 2/3;
+  object-fit: cover;
+  border-radius: 3px;
+}
+
+.cover-current-label {
+  font-size: 0.85rem;
+  color: var(--paper);
+  opacity: 0.6;
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  opacity: 0.75;
+  margin-top: 8px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid var(--rule);
+}
+
+.error-msg {
+  background: rgba(193, 68, 59, 0.15);
+  border: 1px solid var(--accent);
+  color: var(--paper);
+  padding: 10px 14px;
+  border-radius: 3px;
+  font-size: 0.88rem;
+  margin-bottom: 20px;
+}
+
+.delete-form {
+  margin-top: 14px;
+  text-align: right;
+}
+
+.delete-form button {
+  background: none;
+  border: none;
+  color: var(--paper);
+  opacity: 0.45;
+  font-size: 0.85rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.delete-form button:hover {
+  opacity: 0.8;
+}

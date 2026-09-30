@@ -1,0 +1,6 @@
+venv/
+__pycache__/
+*.pyc
+comics.db
+static/uploads/*
+!static/uploads/.gitkeep

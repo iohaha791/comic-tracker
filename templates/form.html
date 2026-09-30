@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Add comic' if mode == 'add' else 'Edit comic' }}{% endblock %}
+{% block content %}
+
+  <div class="form-page">
+    <a class="back-link" href="{{ url_for('home') }}">&larr; Back to shelf</a>
+    <h1>{{ 'Add a comic' if mode == 'add' else 'Edit comic' }}</h1>
+
+    {% if error %}
+      <p class="error-msg">{{ error }}</p>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data">
+      <div class="field">
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title" value="{{ comic['title'] or '' }}" required>
+      </div>
+
+      <div class="field">
+        <label for="description">Description</label>
+        <textarea id="description" name="description">{{ comic['description'] or '' }}</textarea>
+      </div>
+
+      <div class="field">
+        <label for="last_chapter">Last chapter read</label>
+        <input type="text" id="last_chapter" name="last_chapter"
+               value="{{ comic['last_chapter'] or '' }}" placeholder="e.g. Chapter 142">
+      </div>
+
+      <div class="field">
+        <label for="cover">Cover art</label>
+
+        {% if mode == 'edit' and comic['cover_filename'] %}
+          <div class="cover-current">
+            <img src="{{ url_for('static', filename='uploads/' ~ comic['cover_filename']) }}" alt="Current cover">
+            <span class="cover-current-label">Current cover &mdash; choose a file below to replace it</span>
+          </div>
+        {% endif %}
+
+        <input type="file" id="cover" name="cover" accept=".png,.jpg,.jpeg,.webp,.gif">
+
+        {% if mode == 'edit' and comic['cover_filename'] %}
+          <label class="checkbox-row">
+            <input type="checkbox" name="remove_cover" value="1">
+            Remove current cover instead of replacing it
+          </label>
+        {% endif %}
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-accent">
+          {{ 'Add to shelf' if mode == 'add' else 'Save changes' }}
+        </button>
+      </div>
+    </form>
+
+    {% if mode == 'edit' %}
+      <form class="delete-form" action="{{ url_for('delete', comic_id=comic['id']) }}" method="post"
+            onsubmit="return confirm('Remove this comic from your shelf?');">
+        <button type="submit">Delete comic</button>
+      </form>
+    {% endif %}
+  </div>
+
+{% endblock %}
