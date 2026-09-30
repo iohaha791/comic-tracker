@@ -62,28 +62,15 @@ icon.
 
 ## Installing it as an app on Android
 
-Shelf can be installed as a real home-screen app icon (no browser address
-bar, opens full-screen) — the same way Jellyfin's or Plex's web app works.
+There's a dedicated native Android app for this, on the
+[`shelf-android`](https://github.com/iohaha791/comic-tracker/tree/shelf-android)
+branch — see that branch's README for setup and build instructions. It wraps
+this same server in desktop-site mode and adds an offline cache with sync,
+which works better than a browser-installed shortcut (no HTTPS workarounds
+needed, and it still works when the server's briefly unreachable).
 
-1. Make sure your PC (running Shelf) and your phone are on the same Wi-Fi.
-2. On your phone, open **Chrome** and go to `http://192.168.1.23:5050`
-   (using your PC's actual IP from the "Access from other devices" section
-   below).
-3. Tap the **⋮** menu in Chrome → **"Add to Home screen"** (or you may see
-   **"Install app"** show up directly — either one works). Confirm the name
-   ("Shelf" by default) and tap **Add**.
-4. An icon appears on your home screen. Tapping it opens Shelf full-screen,
-   with its own icon and no browser UI — just like a native app.
-
-A couple of things worth knowing:
-- This only works while your PC is on and running Shelf (via
-  `Start Shelf (Silent).vbs` or however you've set it up) and your phone is
-  on the same network — it's not accessible when you're out and about,
-  unless you separately set up something like a VPN back to your home
-  network.
-- The icon is tied to the address it was installed from. If your PC's IP
-  changes later (see the note about DHCP below), the icon will stop working
-  and you'll need to remove it and add it again from the new address.
+You'll still need this server (the `main` branch) running and reachable on
+your network first — the Android app is a client for it, not a replacement.
 
 ## Access from other devices on your network
 
